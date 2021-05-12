@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/lnRoot"
+    tools:context=".DetailedVideoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <VideoView
+            android:id="@+id/video"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="left"
+        android:maxHeight="200dp"
+        android:text="@string/video_description"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        />
+<!--    android:background="#E6EE9C"-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lnButtons"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/thumb_up_trans"
+            android:text="@string/btnLike" />
+
+        <ImageButton
+            android:id="@+id/btnComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/comment"
+            />
+
+        <ImageButton
+            android:id="@+id/btnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/share"
+            android:text="@string/btnShare" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnChannel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#03A9F4">
+
+        <ImageButton
+            android:id="@+id/channelImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:id="@+id/tvChannelInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/ChannelInfo"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tvSubcribeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/SubcribeNum"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Subscribe"
+            android:textColor="@color/black"
+            android:background="#CE93D8"
+            ></androidx.appcompat.widget.AppCompatButton>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnComments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+     <ScrollView
+         android:id="@+id/svComments"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/lnDisplayComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#90CAF9">
+
+        <ListView
+            android:id="@+id/listComment"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:divider="#808ACB"
+            android:dividerHeight="2dp"
+            android:footerDividersEnabled="false"  />
+        <!--            android:background="#190404"-->
+
+    </LinearLayout>
+     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+<!--        <TextView-->
+<!--            android:id="@+id/cmtInfo"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="USER"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:gravity="center"-->
+<!--            />-->
+
+        <EditText
+            android:id="@+id/edtCmt"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:hint="ENTER YOUR COMMENT"
+            android:layout_weight="3"
+            />
+
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="right"
+            android:src="@drawable/send"
+            />
+    </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));// Intent params ( current activity, next activity)
             }
         });
-
     }
 
 //        // Instantiate the RequestQueue.

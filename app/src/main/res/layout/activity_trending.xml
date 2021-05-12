@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".TrendingActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SUBSCRIPTIONS"
+        android:text="TOP TRENDING"
         android:gravity="center"
         android:textStyle="bold"
         android:background="#80DEEA"
         android:textSize="20dp"/>
 
     <ListView
-        android:id="@+id/listVideos"
+        android:id="@+id/listTrendingVideos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="#808ACB"

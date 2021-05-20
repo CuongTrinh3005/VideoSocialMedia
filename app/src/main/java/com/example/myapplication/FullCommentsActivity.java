@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FullCommentsActivity extends AppCompatActivity {
+    TextView tvCommentNum;
     ListView listViewFullComments;
     ArrayList<Comment> commentList = new ArrayList<>();
     CommentsAdapter commentsAdapter;
@@ -64,6 +66,7 @@ public class FullCommentsActivity extends AppCompatActivity {
 
     private void setControl(){
         listViewFullComments = findViewById(R.id.listFullComments);
+        tvCommentNum = findViewById(R.id.tvCommentNum);
     }
 
     private void setEvent(){
@@ -107,6 +110,12 @@ public class FullCommentsActivity extends AppCompatActivity {
 
     private void initListComments(){
         commentList = DetailedVideoActivity.getAllComments(videoId);
+        int numCmt = commentList.size();
+        String commentNumStr="";
+        if(numCmt > 1)
+            commentNumStr = commentList.size() + " comments";
+        else commentNumStr = commentList.size() + " comment";
+        tvCommentNum.setText(commentNumStr);
     }
 
     public boolean postService(String url, HashMap inputParams){

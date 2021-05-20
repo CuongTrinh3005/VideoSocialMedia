@@ -1,13 +1,17 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Adapters.CommentsAdapter;
 import com.example.myapplication.Entities.Comment;
+import com.example.myapplication.Entities.User;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -27,7 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FullCommentsActivity extends AppCompatActivity {
-    ImageButton ibtnBack;
     ListView listViewFullComments;
     ArrayList<Comment> commentList = new ArrayList<>();
     CommentsAdapter commentsAdapter;
@@ -37,10 +41,11 @@ public class FullCommentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_comments);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         videoId = bundle.getString("videoId");
-        Toast.makeText(getApplicationContext(), videoId, Toast.LENGTH_SHORT).show();
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -51,32 +56,51 @@ public class FullCommentsActivity extends AppCompatActivity {
         setEvent();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setControl(){
-        ibtnBack = findViewById(R.id.btnBack);
         listViewFullComments = findViewById(R.id.listFullComments);
     }
 
     private void setEvent(){
-        ibtnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        commentsAdapter = new CommentsAdapter(this, commentList, R.layout.list_comments);
+        commentsAdapter = new CommentsAdapter(FullCommentsActivity.this, commentList, R.layout.list_comments);
         listViewFullComments.setAdapter(commentsAdapter);
-        listViewFullComments.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listViewFullComments.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                initListComments();
-                String[] likes = commentList.get(position).getLike();
-                if(likes != null)  {
-                    int numLike = likes.length;
-                    if(numLike == 1)
-                        Toast.makeText(getApplicationContext(), numLike + " like" , Toast.LENGTH_LONG).show();
-                    else  Toast.makeText(getApplicationContext(), numLike + " likes" , Toast.LENGTH_LONG).show();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = commentList.get(position).getOwner();
+                String ownerId = LoginActivity.googleId.replaceAll("^\"|\"$", "");
+                if(user.getUserID().equals(ownerId)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FullCommentsActivity.this);
+                    builder.setMessage("Do you want do delete?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getApplicationContext(), "Deleting", Toast.LENGTH_SHORT).show();
+                            String url = "https://video-vds.herokuapp.com/comment/" + commentList.get(position).getCommentID();
+                            boolean deleteSuccess = deleteService(url);
+                            if(deleteSuccess){
+                                Toast.makeText(getApplicationContext(), "Delete comment successfully!", Toast.LENGTH_SHORT).show();
+                                commentList.remove(position);
+                                commentsAdapter.notifyDataSetChanged();
+                            }
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.show();
                 }
-                else Toast.makeText(getApplicationContext(), "Nobody likes" , Toast.LENGTH_LONG).show();
+                else Toast.makeText(getApplication(), "Just owner can delete", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
     }

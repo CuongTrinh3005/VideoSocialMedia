@@ -19,7 +19,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Adapters.VideosAdapter;
 import com.example.myapplication.Entities.Video;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +32,6 @@ import java.util.Map;
 public class HomeActivity extends AppCompatActivity {
     ListView listViewVideo;
     ArrayList<Video> listAllVideos = new ArrayList<>();
-//    public static ArrayList<Video> listVideosTrending = new ArrayList<>();
     String info = "";
 
     @Override

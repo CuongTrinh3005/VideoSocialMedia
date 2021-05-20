@@ -19,7 +19,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Adapters.ChannelsAdapter;
-import com.example.myapplication.Adapters.VideosAdapter;
 import com.example.myapplication.Entities.Channel;
 
 import org.json.JSONArray;
@@ -105,8 +104,11 @@ public class ChannelActivity extends AppCompatActivity{
                         listViewChannels.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Toast.makeText(getApplicationContext(), listAllChannels.get(position).getChannelName(), Toast.LENGTH_SHORT)
-                                        .show();
+                                Intent intent = new Intent(ChannelActivity.this, StatisticInChannelActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("channelId", listAllChannels.get(position).getId());
+                                intent.putExtras(bundle);
+                                startActivity(intent);
                             }
                         });
                     }

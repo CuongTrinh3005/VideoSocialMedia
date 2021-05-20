@@ -1,7 +1,5 @@
 package com.example.myapplication.Entities;
 
-import com.example.myapplication.Entities.User;
-
 public class Comment {
     String googleID;
     String videoID;

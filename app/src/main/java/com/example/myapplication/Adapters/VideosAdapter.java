@@ -88,7 +88,11 @@ public class VideosAdapter extends ArrayAdapter {
             String decodedName = Html.fromHtml(videoName).toString();
             info += decodedName + "\n";
             info += channelName + "\t-\t";
-            info += views + " views";
+            if(views > 1){
+                info += views + " views";
+            }
+            else info += views + " view";
+
             tvVideoInfo.setText(info);
         }
         catch (Exception ex){

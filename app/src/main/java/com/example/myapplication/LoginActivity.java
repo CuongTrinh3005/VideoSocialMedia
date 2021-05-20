@@ -8,20 +8,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     public static String cookies;//Truy cap cookies o bat ki dau
@@ -67,16 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                         });
                 // Already subscribed
                 startActivity(new Intent(LoginActivity.this, MenuActivity.class));
-//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));// Intent params ( current activity, next activity)
-                // If have not subscribed yet
-//                String videoId = "jqZR9GiGjBWdvEoQ";
-//                String channelId = "suSMSjAvbBfDGomh";
-//                Intent intent = new Intent(getApplicationContext(), DetailedVideoActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("videoId", videoId);
-//                bundle.putString("channelId", channelId);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
             }
         });
     }

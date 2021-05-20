@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,11 +14,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +59,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
     ArrayList<Comment> commentList = new ArrayList<>();
     CommentsAdapter commentsAdapter;
 
-    TextView tvTitle, tvChannelInfo;
+    TextView tvTitle, tvChannelInfo, tvLikeNum, tvViewNum;
     ImageButton ibtnLike, ibtnComments, ibtnShare, ibtnSend, ibtnChannelImg;
     AppCompatButton btnSubscribe;
     EditText edtComment;
@@ -72,6 +74,8 @@ public class DetailedVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_video);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         videoId = bundle.getString("videoId");
@@ -93,7 +97,6 @@ public class DetailedVideoActivity extends AppCompatActivity {
 
             // Parse video info
             Video video = getVideo(videoInfo);
-            renderVideoInfo(video.getTitle(),video.getDescription(), video.getView());
 
             String[] videoPathList = video.getVideoPaths();
             videoPath = videoPathList[0];
@@ -101,8 +104,10 @@ public class DetailedVideoActivity extends AppCompatActivity {
 
             String[] likes = video.getLikes();
             // Check whether user has liked video before
+            int numLike = 0;
             if(likes != null){
                 if(likes.length>0){
+                    numLike = likes.length;
                     // Remove the double the begin and end double quote in login ID
                     String userId = LoginActivity.googleId.replaceAll("^\"|\"$", "");
                     if(Arrays.asList(likes).contains(userId)){
@@ -111,6 +116,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
                     }
                 }
             }
+            renderVideoInfo(video.getTitle(),video.getDescription(), video.getView(), numLike);
 
             channelId = video.getChannelId();
             renderChannelInfo(channelId);
@@ -138,10 +144,18 @@ public class DetailedVideoActivity extends AppCompatActivity {
         if(currentVideoPosition > 0) recoverVideo(currentVideoPosition);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setControl(){
         videoView = findViewById(R.id.video);
         tvTitle = findViewById(R.id.title);
         tvChannelInfo = findViewById(R.id.tvChannelInfo);
+        tvLikeNum = findViewById(R.id.tvLikeNum);
+        tvViewNum = findViewById(R.id.tvViewNum);
         customList = findViewById(R.id.listComment);
         ibtnLike = findViewById(R.id.btnLike);
         ibtnComments = findViewById(R.id.btnComment);
@@ -165,6 +179,13 @@ public class DetailedVideoActivity extends AppCompatActivity {
                         if(postSuccess){
                             Toast.makeText(getApplication(), "Like video successfully", Toast.LENGTH_SHORT).show();
                             ibtnLike.setImageResource(R.drawable.thumb_up);
+                            // update number of likes
+                            String likeNumStr = tvLikeNum.getText().toString();
+                            int like = Integer.valueOf(likeNumStr.split(" ")[0]);
+                            like += 1;
+                            if(like > 1)
+                                tvLikeNum.setText(like + " likes");
+                            else tvLikeNum.setText(like + " like");
                         }
                     }
                     else{
@@ -172,6 +193,14 @@ public class DetailedVideoActivity extends AppCompatActivity {
                         if(deleteSuccess){
                             ibtnLike.setImageResource(R.drawable.thumb_up_trans);
                             Toast.makeText(getApplication(),"Unlike video successfully!", Toast.LENGTH_SHORT).show();
+                            // update number of likes
+                            String likeNumStr = tvLikeNum.getText().toString();
+                            int like = Integer.valueOf(likeNumStr.split(" ")[0]);
+                            if(like <= 0)   return;
+                            like -= 1;
+                            if(like > 1)
+                                tvLikeNum.setText(like + " likes");
+                            else tvLikeNum.setText(like + " like");
                         }
                         else
                             Toast.makeText(getApplication(), "Unlike this video failed!", Toast.LENGTH_SHORT).show();
@@ -239,7 +268,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Comment's length from 5 to 100", Toast.LENGTH_SHORT).show();
                             return;
                         }
-//                        // Post comment
+                        // Post comment
                         HashMap<String, String> params = new HashMap();
                         params.put("content", content);
                         params.put("videoId", videoId);
@@ -414,13 +443,23 @@ public class DetailedVideoActivity extends AppCompatActivity {
         ibtnChannelImg.setImageBitmap(mIcon_val);
     }
 
-    private void renderVideoInfo(String title, String description, int views) {
-        String info = "";
+    private void renderVideoInfo(String title, String description, int views, int likes) {
+        String info = "", numView = "", numLike = "";
         info += title + "\n";
         info += "Description: " + description + "\n";
-        info += (views+1) + " views";
+        if(views+1 > 1){
+            numView += (views+1) + " views";
+        }
+        else numView += (views+1) + " view";
+
+        if(likes > 1){
+            numLike += likes + " likes";
+        }
+        else numLike += likes + " like";
 
         tvTitle.setText(info);
+        tvViewNum.setText(numView);
+        tvLikeNum.setText(numLike);
     }
 
     private void renderVideo(String videoPath){
@@ -448,11 +487,39 @@ public class DetailedVideoActivity extends AppCompatActivity {
     private void renderListComment(){
         commentsAdapter = new CommentsAdapter(DetailedVideoActivity.this, commentList, R.layout.list_comments);
         customList.setAdapter(commentsAdapter);
-        customList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        customList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), commentList.get(position).getContent(),
-                        Toast.LENGTH_LONG).show();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = commentList.get(position).getOwner();
+                String ownerId = LoginActivity.googleId.replaceAll("^\"|\"$", "");
+                if(user.getUserID().equals(ownerId)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailedVideoActivity.this);
+                    builder.setMessage("Do you want do delete?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getApplicationContext(), "Deleting", Toast.LENGTH_SHORT).show();
+                            String url = "https://video-vds.herokuapp.com/comment/" + commentList.get(position).getCommentID();
+                            boolean deleteSuccess = deleteService(url);
+                            if(deleteSuccess){
+                                Toast.makeText(getApplicationContext(), "Delete comment successfully!", Toast.LENGTH_SHORT).show();
+                                // Update list of comments
+                                commentList.remove(position);
+                                commentsAdapter.notifyDataSetChanged();
+                            }
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.show();
+                }
+                else Toast.makeText(getApplication(), "Just owner can delete", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
     }

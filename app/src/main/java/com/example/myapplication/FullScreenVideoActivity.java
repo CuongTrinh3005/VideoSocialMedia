@@ -3,22 +3,15 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
 public class FullScreenVideoActivity extends AppCompatActivity {
-
     public VideoView videoView;
     private MediaController mediaController;
     private int internalPosition = 0;
@@ -42,8 +35,7 @@ public class FullScreenVideoActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-//        Uri videoUri = Uri.parse("https://video-vds.herokuapp.com" + videoPath);
-        Uri videoUri = Uri.parse("https://video-vds.herokuapp.com/videoAsset/1620001946550/720p/prog.m3u8");
+        Uri videoUri = Uri.parse("https://video-vds.herokuapp.com" + videoPath);
 
         videoView.setVideoURI(videoUri);
         mediaController = new CustomMediaController(this);

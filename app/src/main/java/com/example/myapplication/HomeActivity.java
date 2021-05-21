@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.Adapters.VideosAdapter;
 import com.example.myapplication.Entities.Video;
+import com.example.myapplication.UIComponents.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +50,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Create loading dialog
+        LoadingDialog loadingDialog = new LoadingDialog(HomeActivity.this);
+        loadingDialog.buildDialog();
+
         setControl();
         String url = "https://video-vds.herokuapp.com/video";
         listAllVideos.clear();
@@ -58,17 +65,28 @@ public class HomeActivity extends AppCompatActivity {
         listViewVideo = findViewById(R.id.listVideos);
     }
 
-    public void getAllVideosInfo(String url){
-        try{
+    public void getAllVideosInfo(String url) {
+        try {
             RequestQueue queue = Volley.newRequestQueue(this);
             StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.d("All videos", response);
-                    if(response.length()>0){
+                    if (response.length() > 0) {
                         info = response;
-                        if(info.isEmpty()) return;
-                        else if(info.equals("[]"))  return;
+                        if (info.isEmpty()) return;
+                        else if (info.equals("[]")) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                            builder.setMessage("Please subscribe channels to explore");
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.show();
+                            return;
+                        }
                         try {
                             listAllVideos = parseListVideo(info);
                             Log.d("Trending", String.valueOf(MenuActivity.listVideosTrending.size()));
@@ -92,8 +110,7 @@ public class HomeActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getApplicationContext(), "SUBSCRIBE CHANNELS TO WATCH MORE VIDEOS", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -109,37 +126,39 @@ public class HomeActivity extends AppCompatActivity {
                         }
                     }
                 }
-            }){
+            }) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     HashMap<String, String> params = new HashMap<>();
                     return params;
                 }
+
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("Cookie", LoginActivity.cookies);
 
                     return params;
-                }};
+                }
+            };
             queue.add(request);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     private ArrayList<Video> parseListVideo(String listInfo) throws JSONException {
-        if(listInfo.equals("[]"))
+        if (listInfo.equals("[]"))
             return null;
 
         JSONArray videoOfAllChannelsJson = new JSONArray(listInfo);
         ArrayList<Video> listVideos = new ArrayList<>();
-        for(int pos=0; pos<videoOfAllChannelsJson.length(); pos++){
+        for (int pos = 0; pos < videoOfAllChannelsJson.length(); pos++) {
             JSONObject videoListInfo = (JSONObject) videoOfAllChannelsJson.get(pos);
             JSONArray videoListAll = (JSONArray) videoListInfo.getJSONArray("allVideo");
             int numOfVideo = videoListAll.length();
-            if(numOfVideo>0){
-                for(int index=0; index<videoListAll.length(); index++){
+            if (numOfVideo > 0) {
+                for (int index = 0; index < videoListAll.length(); index++) {
                     JSONObject videoJson = (JSONObject) videoListAll.get(index);
                     String channelId = videoJson.getString("channelId");
                     String title = videoJson.getString("title");
@@ -147,53 +166,53 @@ public class HomeActivity extends AppCompatActivity {
                     int view = videoJson.getInt("view");
                     JSONArray videoPaths = videoJson.getJSONArray("videoPath");
                     String[] paths = null;
-                    if(videoPaths.length() >  0){
+                    if (videoPaths.length() > 0) {
                         paths = new String[videoPaths.length()];
-                        for(int position=0; position<videoPaths.length(); position++)
+                        for (int position = 0; position < videoPaths.length(); position++)
                             paths[position] = String.valueOf(videoPaths.get(position));
                     }
                     JSONArray likeArr = videoJson.getJSONArray("like");
                     // Process like array
                     String[] likes = null;
-                    if(likeArr.length() >  0){
+                    if (likeArr.length() > 0) {
                         likes = new String[likeArr.length()];
-                        for(int position=0; position<likeArr.length(); position++)
+                        for (int position = 0; position < likeArr.length(); position++)
                             likes[position] = String.valueOf(likeArr.get(position));
                     }
                     String imagePath = videoJson.getString("imagePath");
                     String videoId = videoJson.getString("_id");
 
-                    Video video = new Video(channelId, title, description, view, paths, likes,  imagePath, videoId);
+                    Video video = new Video(channelId, title, description, view, paths, likes, imagePath, videoId);
                     listVideos.add(video);
                 }
             }
             // Get video trending of all subscribed channels
             JSONObject videoTrendingJson = videoListInfo.getJSONObject("trendy");
-            if(videoTrendingJson != null && !videoTrendingJson.isNull("channelId")){
+            if (videoTrendingJson != null && !videoTrendingJson.isNull("channelId")) {
                 String channelId = videoTrendingJson.getString("channelId");
                 String title = videoTrendingJson.getString("title");
                 String description = videoTrendingJson.getString("description");
                 int view = videoTrendingJson.getInt("view");
                 JSONArray videoPaths = videoTrendingJson.getJSONArray("videoPath");
                 String[] paths = null;
-                if(videoPaths.length() >  0){
+                if (videoPaths.length() > 0) {
                     paths = new String[videoPaths.length()];
-                    for(int position=0; position<videoPaths.length(); position++)
+                    for (int position = 0; position < videoPaths.length(); position++)
                         paths[position] = String.valueOf(videoPaths.get(position));
                 }
                 JSONArray likeArr = videoTrendingJson.getJSONArray("like");
                 // Process like array
                 String[] likes = null;
-                if(likeArr.length() >  0){
+                if (likeArr.length() > 0) {
                     likes = new String[likeArr.length()];
-                    for(int position=0; position<likeArr.length(); position++)
+                    for (int position = 0; position < likeArr.length(); position++)
                         likes[position] = String.valueOf(likeArr.get(position));
                 }
                 String imagePath = videoTrendingJson.getString("imagePath");
                 String videoId = videoTrendingJson.getString("_id");
 
-                Video videoTrending = new Video(channelId, title, description, view, paths, likes,  imagePath, videoId);
-                if(!isVideoTrendingExisted(videoTrending))
+                Video videoTrending = new Video(channelId, title, description, view, paths, likes, imagePath, videoId);
+                if (!isVideoTrendingExisted(videoTrending))
                     MenuActivity.listVideosTrending.add(videoTrending);
             }
         }
@@ -201,9 +220,9 @@ public class HomeActivity extends AppCompatActivity {
         return listVideos;
     }
 
-    private boolean isVideoTrendingExisted(Video video){
-        for(Video v : MenuActivity.listVideosTrending){
-            if(v.getVideoId().equals(video.getVideoId()))
+    private boolean isVideoTrendingExisted(Video video) {
+        for (Video v : MenuActivity.listVideosTrending) {
+            if (v.getVideoId().equals(video.getVideoId()))
                 return true;
         }
         return false;

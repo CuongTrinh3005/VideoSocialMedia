@@ -35,6 +35,7 @@ import com.example.myapplication.Adapters.CommentsAdapter;
 import com.example.myapplication.Entities.Comment;
 import com.example.myapplication.Entities.User;
 import com.example.myapplication.Entities.Video;
+import com.example.myapplication.UIComponents.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -138,6 +139,8 @@ public class DetailedVideoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        LoadingDialog loadingDialog = new LoadingDialog(DetailedVideoActivity.this);
+        loadingDialog.buildDialog();
         commentList.clear();
         initListComment(videoId);
         renderListComment();

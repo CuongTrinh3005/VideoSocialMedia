@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,6 +91,8 @@ public class HomeActivity extends AppCompatActivity {
                         try {
                             listAllVideos = parseListVideo(info);
                             Log.d("Trending", String.valueOf(MenuActivity.listVideosTrending.size()));
+                            // Sort by videos' views descending
+                            Collections.sort(MenuActivity.listVideosTrending, Video.VideoViewComparator);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

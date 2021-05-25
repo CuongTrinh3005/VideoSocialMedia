@@ -1,5 +1,7 @@
 package com.example.myapplication.Entities;
 
+import java.util.Comparator;
+
 public class Video {
     private String channelId;
     private String title;
@@ -86,4 +88,12 @@ public class Video {
         this.imagePath = imagePath;
         this.videoId = videoId;
     }
+
+    // Sort by videos' views descending
+    public static Comparator<Video> VideoViewComparator = new Comparator<Video>() {
+        @Override
+        public int compare(Video o1, Video o2) {
+            return o2.getView() - o1.getView();
+        }
+    };
 }

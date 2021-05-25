@@ -449,7 +449,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
     private void renderVideoInfo(String title, String description, int views, int likes) {
         String info = "", numView = "", numLike = "";
         info += title + "\n";
-        info += "Description: " + description + "\n";
+        info += "Description: " + description ;
         if(views+1 > 1){
             numView += (views+1) + " views";
         }

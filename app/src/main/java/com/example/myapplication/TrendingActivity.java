@@ -11,8 +11,12 @@ import android.widget.Toast;
 
 import com.example.myapplication.Adapters.VideosAdapter;
 import com.example.myapplication.Entities.Video;
+import com.example.myapplication.UIComponents.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TrendingActivity extends AppCompatActivity {
     ListView listViewTrending;
@@ -25,8 +29,14 @@ public class TrendingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trending);
 
         setControl();
-        initListTrending();
         setEvent();
+        initListTrending();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initListTrending();
     }
 
     private void setControl(){
@@ -34,7 +44,9 @@ public class TrendingActivity extends AppCompatActivity {
     }
 
     private void initListTrending(){
-        listTrendingVideos = MenuActivity.listVideosTrending;
+        listTrendingVideos.clear();
+        listTrendingVideos.addAll(MenuActivity.listVideosTrending);
+        videosAdapter.notifyDataSetChanged();
     }
 
     private void setEvent(){

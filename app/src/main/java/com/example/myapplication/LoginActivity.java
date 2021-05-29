@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                 // Already subscribed
-                startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+                startActivity(new Intent(LoginActivity.this, linkToLogin_google.class));
             }
         });
     }

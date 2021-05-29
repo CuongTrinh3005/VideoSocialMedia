@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".linkToLogin_google"
+    android:orientation="vertical"
+    android:paddingVertical="130dp"
+    android:layout_gravity="center"
+    android:background="#F3FEFF">
+
+    <ImageView
+        android:layout_width="235dp"
+        android:layout_height="195dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_baseline_video_library_24"
+        />
+    <TextView
+        android:id="@+id/textWelcome"
+        android:layout_width="338dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Welcome to Devtube"
+        android:layout_margin="20dp"
+        android:textColor="#122CBD"
+        android:textSize="35dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button_Go"
+        android:layout_width="116dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_but_textcolor"
+        android:text="Go"
+        android:textColor="#1856BF"
+        android:textSize="40sp" />
+
+
+</LinearLayout>

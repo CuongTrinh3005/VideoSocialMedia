@@ -27,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class VideosAdapter extends ArrayAdapter {
     Context context;
@@ -74,7 +75,7 @@ public class VideosAdapter extends ArrayAdapter {
             ivVideo.setImageBitmap(mIcon_val);
 
             String videoName="", info="", channelName="", channelInfo="";
-            int views=0;
+            int views=0, numLike = 0;
             try {
                 // Avoid font error when displaying
                 videoName = new String(listAllVideos.get(position).getTitle().getBytes("ISO-8859-1"), "UTF-8");
@@ -82,6 +83,12 @@ public class VideosAdapter extends ArrayAdapter {
                 JSONObject channelJson = new JSONObject(channelInfo) ;
                 channelName = channelJson.getString("channelName");
                 views = listAllVideos.get(position).getView();
+                String[] likes = listAllVideos.get(position).getLikes();
+                if(likes != null){
+                    if(likes.length>0) {
+                        numLike= likes.length;
+                    }
+                }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -92,6 +99,14 @@ public class VideosAdapter extends ArrayAdapter {
                 info += views + " views";
             }
             else info += views + " view";
+
+            if(numLike != 0) {
+                info += "\t-\t";
+                if(numLike > 1){
+                    info += numLike + " likes";
+                }
+                else info += numLike + " like";
+            }
 
             tvVideoInfo.setText(info);
         }

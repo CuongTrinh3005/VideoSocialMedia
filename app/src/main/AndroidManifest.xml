@@ -11,18 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".StatisticInChannelActivity"></activity>
-        <activity android:name=".TrendingActivity"></activity>
-        <activity android:name=".FullCommentsActivity"></activity>
-
-        <activity android:name=".ChannelActivity"></activity>
-
-        <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".StatisticInChannelActivity" />
+        <activity android:name=".TrendingActivity" />
+        <activity android:name=".FullCommentsActivity" />
+        <activity android:name=".ChannelActivity" />
+        <activity android:name=".MenuActivity" />
         <activity
             android:name=".FullScreenVideoActivity"
-            android:configChanges="orientation">
-        </activity>
-        <activity android:name=".DetailedVideoActivity" android:windowSoftInputMode="adjustPan"></activity>
+            android:configChanges="orientation"></activity>
+        <activity
+            android:name=".DetailedVideoActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.FullScreen">
@@ -32,7 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Splash_scene">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +38,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".linkToLogin_google"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"

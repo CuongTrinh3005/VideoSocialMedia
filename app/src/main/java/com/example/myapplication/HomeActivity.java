@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,12 +33,24 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     ListView listViewVideo;
     ArrayList<Video> listAllVideos = new ArrayList<>();
     String info = "";
+    Spinner spinner;
+    int flag_spinner = 0; /// 0-none, 1- A->Z, 2- Sort  theo like
+    VideosAdapter videosAdapter;
+
+    public int getFlag_spinner() {
+        return flag_spinner;
+    }
+
+    public void setFlag_spinner(int flag_spinner) {
+        this.flag_spinner = flag_spinner;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         this.setContentView(R.layout.home);
 
         setControl();
+        setSpinner();
         String url = "https://video-vds.herokuapp.com/video";
         getAllVideosInfo(url);
     }
@@ -62,8 +77,21 @@ public class HomeActivity extends AppCompatActivity {
         getAllVideosInfo(url);
     }
 
+    public void setSpinner(){
+        ////set spinner item.
+        spinner.setOnItemSelectedListener(HomeActivity.this);
+        List<String> itemSpinner = new ArrayList<>();
+        itemSpinner.add("none");
+        itemSpinner.add("A -> Z");
+        itemSpinner.add("By like");
+        /////Tạo adapter
+        ArrayAdapter<String> spinerAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, itemSpinner);
+        spinner.setAdapter(spinerAdapter);
+    }
+
     private void setControl() {
         listViewVideo = findViewById(R.id.listVideos);
+        spinner = findViewById(R.id.spinner_sort);
     }
 
     public void getAllVideosInfo(String url) {
@@ -96,9 +124,32 @@ public class HomeActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                         VideosAdapter videosAdapter;
-                        videosAdapter = new VideosAdapter(HomeActivity.this, listAllVideos, R.layout.list_videos);
-                        listViewVideo.setAdapter(videosAdapter);
+                        MenuActivity.listVideosHome.clear();
+                        MenuActivity.listVideosHome = (ArrayList<Video>) listAllVideos.clone();
+                        if(flag_spinner==1) {
+
+//                            MenuActivity.listVideosHome = (ArrayList<Video>) listAllVideos.clone();
+                            Collections.sort(listAllVideos, Video.VideoViewComparator_byName);
+                            videosAdapter = new VideosAdapter(HomeActivity.this, listAllVideos, R.layout.list_videos);
+                            listViewVideo.setAdapter(videosAdapter);
+//                            HomeActivity.this.setContentView(R.layout.home);
+                        }else if (flag_spinner==2){
+//                            MenuActivity.listVideosHomeLike.clear();
+//                            MenuActivity.listVideosHomeLike = (ArrayList<Video>) listAllVideos.clone();
+                            Collections.sort(listAllVideos, Video.VideoViewComparator_byLike);
+                            videosAdapter = new VideosAdapter(HomeActivity.this, listAllVideos, R.layout.list_videos);
+                            listViewVideo.setAdapter(videosAdapter);
+                        }else {
+                            videosAdapter = new VideosAdapter(HomeActivity.this, MenuActivity.listVideosHome, R.layout.list_videos);
+                            listViewVideo.setAdapter(videosAdapter);
+                        }
+
+//                        videosAdapter = new VideosAdapter(HomeActivity.this, listAllVideos, R.layout.list_videos);
+//                        listViewVideo.setAdapter(videosAdapter);
+
                         listViewVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -229,5 +280,31 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String item = parent.getItemAtPosition(position).toString();
+//        Toast.makeText(parent.getContext(), "Bạn đã chọn : " + item, Toast.LENGTH_LONG).show();
+        if (item.compareTo("A -> Z")==0){
+            flag_spinner = 1;
+            HomeActivity.this.onResume();
+        }
+
+        else if (item.compareTo("none")==0){
+            flag_spinner = 0;
+            HomeActivity.this.onResume();
+        }
+
+        else if (item.compareTo("By like")==0) {
+            flag_spinner = 2;
+            HomeActivity.this.onResume();
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

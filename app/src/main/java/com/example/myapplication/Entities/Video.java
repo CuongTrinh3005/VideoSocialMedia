@@ -62,6 +62,13 @@ public class Video {
         this.likes = likes;
     }
 
+    public int getLengthLike(){
+        int length = 0;
+        if (getLikes() != null)
+            length = getLikes().length;
+        return length;
+    }
+
     public String getImagePath() {
         return imagePath;
     }
@@ -94,6 +101,20 @@ public class Video {
         @Override
         public int compare(Video o1, Video o2) {
             return o2.getView() - o1.getView();
+        }
+    };
+
+    public static Comparator<Video> VideoViewComparator_byName = new Comparator<Video>() {
+        @Override
+        public int compare(Video o1, Video o2) {
+            return o1.getTitle().compareTo(o2.getTitle());
+        }
+    };
+
+    public static Comparator<Video> VideoViewComparator_byLike = new Comparator<Video>() {
+        @Override
+        public int compare(Video o1, Video o2) {
+            return (o2.getLengthLike() - o1.getLengthLike());
         }
     };
 }

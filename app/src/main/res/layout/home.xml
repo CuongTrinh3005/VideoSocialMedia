@@ -16,6 +16,25 @@
         android:background="#80DEEA"
         android:textSize="20dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0">
+
+        <TextView
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text=" Sort: "
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinner_sort"
+            android:layout_width="212dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/listVideos"
         android:layout_width="match_parent"

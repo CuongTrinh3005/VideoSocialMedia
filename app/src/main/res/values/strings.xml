@@ -9,4 +9,5 @@
     <string name="Subscribed">SUBSCRIBED</string>
     <string name="cmtWarningEmpty">Content must not be empty</string>
 
+    <string name="button_Go">Go</string>
 </resources>

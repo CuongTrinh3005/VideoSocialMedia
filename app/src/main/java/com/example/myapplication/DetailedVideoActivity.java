@@ -110,7 +110,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
                 if(likes.length>0){
                     numLike = likes.length;
                     // Remove the double the begin and end double quote in login ID
-                    String userId = LoginActivity.googleId.replaceAll("^\"|\"$", "");
+                    String userId = LoginActivity.googleId;
                     if(Arrays.asList(likes).contains(userId)){
                         ibtnLike.setImageResource(R.drawable.thumb_up);
                         isButtonLikeVideoClicked = true;
@@ -494,7 +494,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = commentList.get(position).getOwner();
-                String ownerId = LoginActivity.googleId.replaceAll("^\"|\"$", "");
+                String ownerId = LoginActivity.googleId;
                 if(user.getUserID().equals(ownerId)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(DetailedVideoActivity.this);
                     builder.setMessage("Do you want do delete?");

@@ -130,7 +130,7 @@ public class CommentsAdapter extends ArrayAdapter {
             });
             // Check this user has already liked comments yet
             String[] likes = commentList.get(position).getLike();
-            String userId = LoginActivity.googleId.replaceAll("^\"|\"$", "");
+            String userId = LoginActivity.googleId;
             if(likes != null){
                 if(likes.length>0) {
                     numLikeCmt.setText(Integer.toString(likes.length));

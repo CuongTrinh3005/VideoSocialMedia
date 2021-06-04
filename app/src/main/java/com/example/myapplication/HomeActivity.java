@@ -125,33 +125,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                             e.printStackTrace();
                         }
 
-
                         VideosAdapter videosAdapter = new VideosAdapter(HomeActivity.this, listAllVideos, R.layout.list_videos);
                         listViewVideo.setAdapter(videosAdapter);
-//                        MenuActivity.listVideosHome.clear();
-//                        MenuActivity.listVideosHome = (ArrayList<Video>) listAllVideos.clone();
                         if(flag_spinner==1) {
-//                            MenuActivity.listVideosHome = (ArrayList<Video>) listAllVideos.clone();
                             Collections.sort(listAllVideos, Video.VideoViewComparator_byName);
-//                            videosAdapter = new VideosAdapter(HomeActivity.this, listAllVideos, R.layout.list_videos);
-//                            listViewVideo.setAdapter(videosAdapter);
                             videosAdapter.notifyDataSetChanged();
-//                            HomeActivity.this.setContentView(R.layout.home);
                         }else if (flag_spinner==2){
-//                            MenuActivity.listVideosHomeLike.clear();
-//                            MenuActivity.listVideosHomeLike = (ArrayList<Video>) listAllVideos.clone();
                             Collections.sort(listAllVideos, Video.VideoViewComparator_byLike);
-//                            videosAdapter = new VideosAdapter(HomeActivity.this, listAllVideos, R.layout.list_videos);
-//                            listViewVideo.setAdapter(videosAdapter);
                             videosAdapter.notifyDataSetChanged();
                         }
-//                        else {
-//                            videosAdapter = new VideosAdapter(HomeActivity.this, MenuActivity.listVideosHome, R.layout.list_videos);
-//                            listViewVideo.setAdapter(videosAdapter);
-//                        }
-
-//                        videosAdapter = new VideosAdapter(HomeActivity.this, listAllVideos, R.layout.list_videos);
-//                        listViewVideo.setAdapter(videosAdapter);
 
                         listViewVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override

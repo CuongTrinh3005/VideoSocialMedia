@@ -16,8 +16,6 @@ import java.util.List;
 
 public class MenuActivity extends ActivityGroup {
     public static ArrayList<Video> listVideosTrending = new ArrayList<>();
-    public static ArrayList<Video> listVideosHome = new ArrayList<>();
-    public static ArrayList<Video> listVideosHomeLike = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +48,4 @@ public class MenuActivity extends ActivityGroup {
         tabHost.addTab(spec);
 
     }
-
-
 }

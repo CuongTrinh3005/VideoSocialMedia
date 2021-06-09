@@ -26,6 +26,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.Adapters.TopUsersAdapter;
 import com.example.myapplication.Entities.User;
 import com.example.myapplication.Entities.Video;
+//import com.github.mikephil.charting.charts.BarChart;
+//import com.github.mikephil.charting.data.BarData;
+//import com.github.mikephil.charting.data.BarDataSet;
+//import com.github.mikephil.charting.data.BarEntry;
+//import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -81,10 +86,10 @@ public class StatisticInChannelActivity extends AppCompatActivity {
         String channelId = bundle.getString("channelId");
         String endpoint = String.format("https://video-vds.herokuapp.com/channel/%s/top", channelId);
         listTopUsers = getTopUser(endpoint);
+        System.err.println("list top user:"+listTopUsers);
 
         initBarChart(usersChart,listTopUsers);
-        //Event button change chart
-        //        clickCmtCMost(usersChart,listTopUsers);
+//        Event button change chart
         ArrayList<Video> videos= getVideoOfChannel(String.format("https://video-vds.herokuapp.com/video?channelId=%s", channelId));
 
         ArrayList<User> userlikesmost= userLikesMost(listTopUsers,videos);
@@ -117,8 +122,8 @@ public class StatisticInChannelActivity extends AppCompatActivity {
 
     private void setEvent(){
         topUsersAdapter = new TopUsersAdapter(StatisticInChannelActivity.this, listTopUsers, R.layout.list_top_users);
+        System.err.println("list top user:"+listTopUsers);
         lvTopUsers.setAdapter(topUsersAdapter);
-
     }
 
     private ArrayList<User> getTopUser(String url){

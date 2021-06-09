@@ -7,14 +7,14 @@
     android:orientation="vertical"
     android:paddingVertical="130dp"
     android:layout_gravity="center"
-    android:background="#F3FEFF">
+    android:background="#343d46">
 
     <ImageView
-        android:layout_width="235dp"
+        android:layout_width="190dp"
         android:layout_height="195dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_baseline_video_library_24"
-        />
+        android:src="@drawable/devtube_logo" />
+
     <TextView
         android:id="@+id/textWelcome"
         android:layout_width="338dp"
@@ -22,20 +22,20 @@
         android:layout_gravity="center"
         android:text="Welcome to Devtube"
         android:layout_margin="20dp"
-        android:textColor="#122CBD"
-        android:textSize="35dp"
+        android:textColor="#F3F4F8"
+        android:textSize="35sp"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/button_Go"
-        android:layout_width="116dp"
-        android:layout_height="120dp"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:background="@drawable/custom_but_textcolor"
         android:text="@string/button_Go"
-        android:textColor="#1856BF"
-        android:textSize="40sp" />
-
+        android:textColor="#FFF"
+        android:textSize="30sp" />
 
 </LinearLayout>

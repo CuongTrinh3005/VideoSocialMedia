@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -38,6 +40,8 @@ public class StatisticInChannelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic_in_channel);
+        this.getSupportActionBar().setTitle("Channel Feature");
+        this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#343d46")));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         // These lines of code are used with the purpose of avoiding asynchronous thread exception

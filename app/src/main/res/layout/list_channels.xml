@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:descendantFocusability="blocksDescendants"
-    android:focusable="false" >
+    android:focusable="false"
+    android:background="#000">
 
     <ImageView
         android:id="@+id/iconChannel"
@@ -27,7 +28,8 @@
             android:layout_gravity="center"
             android:text="Name"
             android:textStyle="bold"
-            />
+            android:textColor="#fff"
+            android:gravity="center"/>
     </LinearLayout>
 
     <LinearLayout

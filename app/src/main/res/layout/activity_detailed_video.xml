@@ -112,7 +112,8 @@
             android:layout_weight="9"
             android:gravity="center"
             android:text="@string/ChannelInfo"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSubscribe"
@@ -121,7 +122,9 @@
             android:layout_weight="1"
             android:background="#CE93D8"
             android:text="@string/Subscribe"
-            android:textColor="@color/black"></androidx.appcompat.widget.AppCompatButton>
+            android:textColor="@color/black">
+
+        </androidx.appcompat.widget.AppCompatButton>
 
     </LinearLayout>
 
@@ -130,24 +133,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/lnDisplayComments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#90CAF9"
-            android:orientation="horizontal">
-
-            <ListView
-                android:id="@+id/listComment"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:divider="#808ACB"
-                android:dividerHeight="2dp"
-                android:footerDividersEnabled="false" />
-
-        </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,6 +153,23 @@
 
                 android:layout_gravity="right"
                 android:src="@drawable/send" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnDisplayComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#90CAF9"
+            android:orientation="horizontal">
+
+            <ListView
+                android:id="@+id/listComment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#808ACB"
+                android:dividerHeight="2dp"
+                android:footerDividersEnabled="false" />
+
         </LinearLayout>
 
     </LinearLayout>

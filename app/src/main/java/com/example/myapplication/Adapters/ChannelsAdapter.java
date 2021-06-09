@@ -21,6 +21,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.myapplication.ChannelActivity;
 import com.example.myapplication.Entities.Channel;
+import com.example.myapplication.Home_main;
 import com.example.myapplication.R;
 
 import java.io.UnsupportedEncodingException;

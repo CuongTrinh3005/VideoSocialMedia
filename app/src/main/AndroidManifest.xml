@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <activity android:name=".FullTopUsersActivity"></activity>
         <activity android:name=".StatisticInChannelActivity" />
         <activity android:name=".TrendingActivity" />
         <activity android:name=".FullCommentsActivity" />
@@ -18,7 +19,7 @@
         <activity android:name=".MenuActivity" />
         <activity
             android:name=".FullScreenVideoActivity"
-            android:configChanges="orientation"></activity>
+            android:configChanges="orientation" />
         <activity
             android:name=".DetailedVideoActivity"
             android:windowSoftInputMode="adjustPan" />

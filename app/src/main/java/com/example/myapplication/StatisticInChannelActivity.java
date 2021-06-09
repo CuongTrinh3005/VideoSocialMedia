@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.android.volley.Request;
@@ -54,16 +56,15 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class StatisticInChannelActivity extends AppCompatActivity {
-    ListView lvTopUsers;
     ListView lTopLikeCmt;
     VideoView videoView;
-    TextView tvVideoInfo;
+    TextView tvVideoInfo, tvAllTopUsers;
     BarChart barChart;
     Button btnLikeMost;
     Button btnLikeCmt;
     public static int totalLikes = 0;
+    public static String channelId = "";
     ArrayList<User> listTopUsers = new ArrayList<>();
-    TopUsersAdapter topUsersAdapter;
     ArrayList<BarEntry> usersChart= new ArrayList<>();
     ArrayAdapter userArrayAdapter;
     int stateClick= 0;
@@ -83,10 +84,9 @@ public class StatisticInChannelActivity extends AppCompatActivity {
 
         setControl();
         Bundle bundle = getIntent().getExtras();
-        String channelId = bundle.getString("channelId");
+        channelId = bundle.getString("channelId");
         String endpoint = String.format("https://video-vds.herokuapp.com/channel/%s/top", channelId);
         listTopUsers = getTopUser(endpoint);
-        System.err.println("list top user:"+listTopUsers);
 
         initBarChart(usersChart,listTopUsers);
 //        Event button change chart
@@ -113,7 +113,8 @@ public class StatisticInChannelActivity extends AppCompatActivity {
     private void setControl(){
         videoView = findViewById(R.id.videoTopChannel);
         tvVideoInfo = findViewById(R.id.topVideoInfo);
-        lvTopUsers = findViewById(R.id.listTopUsers);
+        tvAllTopUsers = findViewById(R.id.tvAllTopUsers);
+//        lvTopUsers = findViewById(R.id.listTopUsers);
         barChart= findViewById(R.id.barChart);
         btnLikeMost= findViewById(R.id.btnlike);
         btnLikeCmt= findViewById(R.id.btnlikecmt);
@@ -121,12 +122,17 @@ public class StatisticInChannelActivity extends AppCompatActivity {
     }
 
     private void setEvent(){
-        topUsersAdapter = new TopUsersAdapter(StatisticInChannelActivity.this, listTopUsers, R.layout.list_top_users);
-        System.err.println("list top user:"+listTopUsers);
-        lvTopUsers.setAdapter(topUsersAdapter);
+        tvAllTopUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(StatisticInChannelActivity.this, "Full Top Users", Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(StatisticInChannelActivity.this, FullTopUsersActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private ArrayList<User> getTopUser(String url){
+    public static ArrayList<User> getTopUser(String url){
         String infoJson = DetailedVideoActivity.getService(url);
         System.err.println("infoJson:"+infoJson);
         ArrayList<User> list = new ArrayList<>();

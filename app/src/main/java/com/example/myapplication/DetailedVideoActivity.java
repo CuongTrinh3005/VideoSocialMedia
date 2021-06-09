@@ -353,22 +353,22 @@ public class DetailedVideoActivity extends AppCompatActivity {
                     }
                 }
             }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        if(inputParams == null){
-                            HashMap<String, String> params = new HashMap<>();
-                            return params;
-                        }
-                        else
-                            return inputParams;
-                    }
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("Cookie", LoginActivity.cookies);
-
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    if(inputParams == null){
+                        HashMap<String, String> params = new HashMap<>();
                         return params;
-                    }};
+                    }
+                    else
+                        return inputParams;
+                }
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Cookie", LoginActivity.cookies);
+
+                    return params;
+                }};
             queue.add(request);
             return true;
         }catch(Exception ex){
@@ -617,7 +617,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
                 String name = userJsonObj.getString("name");
                 String image = userJsonObj.getString("image");
 
-                User user = new User(userID, email, name, image);
+                User user = new User(userID, email, name, image, 0);
 
                 // Create comment object
                 Comment comment = new Comment(googleId, videoId, content, like, commentID, user);

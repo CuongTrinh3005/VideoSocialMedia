@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:background="#584a91"
+    android:background="#343d46"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -16,7 +16,7 @@
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp"
-            android:src="@drawable/ic_action_logo" />
+            android:src="@drawable/devtube_logo" />
 
     </RelativeLayout>
 
@@ -30,9 +30,9 @@
             android:layout_marginTop="20dp"
             android:fontFamily="cursive"
             android:layout_centerHorizontal="true"
-            android:text="Devices Managerment"
+            android:text="The best videos in one place"
             android:textColor="#fff"
-            android:textSize="40dp" />
+            android:textSize="30dp" />
     </RelativeLayout>
 
     <RelativeLayout

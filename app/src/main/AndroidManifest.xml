@@ -61,6 +61,11 @@
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
+        <service android:name="">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

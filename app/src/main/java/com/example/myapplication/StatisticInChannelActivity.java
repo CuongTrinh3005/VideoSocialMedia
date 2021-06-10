@@ -158,7 +158,7 @@ public class StatisticInChannelActivity extends AppCompatActivity {
     }
 
     private Video getTopVideo(String channelID){
-        for(Video v : MenuActivity.listVideosTrending){
+        for(Video v : Home_main.listVideosTrending){
             if(v.getChannelId().equals(channelID))
                 return v;
         }

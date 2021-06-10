@@ -14,13 +14,7 @@
 
         <activity android:name=".FullTopUsersActivity"></activity>
 
-        <activity android:name=".Home_main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Home_main"></activity>
 
         <activity android:name=".StatisticInChannelActivity" />
         <activity android:name=".TrendingActivity" />
@@ -36,11 +30,6 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Splash_scene">
             <intent-filter>
@@ -61,7 +50,7 @@
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
-        <service android:name="">
+        <service android:name=".Services.MyFirebaseService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.MenuItem;
@@ -43,6 +45,8 @@ public class FullCommentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_comments);
+        this.getSupportActionBar().setTitle("All Comments");
+        this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#343d46")));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 

@@ -21,7 +21,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="SUBSCRIBE CHANNELS TO WATCH MORE VIDEOS"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+        android:textColor="@color/black"/>
 
 
 </LinearLayout>

@@ -21,6 +21,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.myapplication.ChannelActivity;
 import com.example.myapplication.Entities.Channel;
+import com.example.myapplication.Home_main;
 import com.example.myapplication.R;
 
 import java.io.UnsupportedEncodingException;
@@ -75,7 +76,8 @@ public class ChannelsAdapter extends ArrayAdapter {
                         // Unsubscribe a channel
                         // Call Delete request.
 
-                        Boolean deleteSuccess = ((ChannelActivity) context).unSubscribe(url);
+//                        Boolean deleteSuccess = ((ChannelActivity) context).unSubscribe(url);
+                        Boolean deleteSuccess = ((Home_main) context).unSubscribe(url);
                         if (deleteSuccess) {
                             btnSubscribeChannel.setText(R.string.Subscribe);
                             btnSubscribeChannel.setTextColor(R.color.black);
@@ -86,7 +88,8 @@ public class ChannelsAdapter extends ArrayAdapter {
 
                     }
                     // subscribe a channel
-                    Boolean postSuccess = ((ChannelActivity) context).subscribe(url, null);
+//                    Boolean postSuccess = ((ChannelActivity) context).subscribe(url, null);
+                    Boolean postSuccess = ((Home_main) context).subscribe(url, null);
                     if (postSuccess) {
                         Toast.makeText(getContext(), "Subscribe channel successfully", Toast.LENGTH_SHORT).show();
                         btnSubscribeChannel.setText(R.string.Subscribed);

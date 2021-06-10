@@ -34,7 +34,8 @@
                 android:gravity="left"
                 android:text="ID:    "
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                android:textColor="@color/black"/>
         </LinearLayout>
 
     </LinearLayout>

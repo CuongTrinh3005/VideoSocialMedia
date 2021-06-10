@@ -111,7 +111,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
                 if(likes.length>0){
                     numLike = likes.length;
                     // Remove the double the begin and end double quote in login ID
-                    String userId = LoginActivity.googleId.replaceAll("^\"|\"$", "");
+                    String userId = LoginActivity.googleId;
                     if(Arrays.asList(likes).contains(userId)){
                         ibtnLike.setImageResource(R.drawable.thumb_up);
                         isButtonLikeVideoClicked = true;
@@ -354,22 +354,22 @@ public class DetailedVideoActivity extends AppCompatActivity {
                     }
                 }
             }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        if(inputParams == null){
-                            HashMap<String, String> params = new HashMap<>();
-                            return params;
-                        }
-                        else
-                            return inputParams;
-                    }
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("Cookie", LoginActivity.cookies);
-
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    if(inputParams == null){
+                        HashMap<String, String> params = new HashMap<>();
                         return params;
-                    }};
+                    }
+                    else
+                        return inputParams;
+                }
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Cookie", LoginActivity.cookies);
+
+                    return params;
+                }};
             queue.add(request);
             return true;
         }catch(Exception ex){
@@ -495,7 +495,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = commentList.get(position).getOwner();
-                String ownerId = LoginActivity.googleId.replaceAll("^\"|\"$", "");
+                String ownerId = LoginActivity.googleId;
                 if(user.getUserID().equals(ownerId)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(DetailedVideoActivity.this);
                     builder.setMessage("Do you want do delete?");
@@ -618,7 +618,7 @@ public class DetailedVideoActivity extends AppCompatActivity {
                 String name = userJsonObj.getString("name");
                 String image = userJsonObj.getString("image");
 
-                User user = new User(userID, email, name, image);
+                User user = new User(userID, email, name, image, 0);
 
                 // Create comment object
                 Comment comment = new Comment(googleId, videoId, content, like, commentID, user);

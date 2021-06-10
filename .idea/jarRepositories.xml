@@ -26,5 +26,20 @@
       <option name="name" value="maven" />
       <option name="url" value="https://repo.brightcove.com/releases" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../Android%20Project/VideoSocialMedia/https/jitpack.io" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../Android%20Project/VideoSocialMedia/app/https/jitpack.io" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="https://jitpack.io" />
+    </remote-repository>
   </component>
 </project>

@@ -94,6 +94,15 @@ public class FullCommentsActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Delete comment successfully!", Toast.LENGTH_SHORT).show();
                                 commentList.remove(position);
                                 commentsAdapter.notifyDataSetChanged();
+
+                                // Update number of comments
+                                String infoNumComment = "";
+                                int no_comments = commentList.size();
+                                if(no_comments>1)
+                                    infoNumComment = no_comments + " comments";
+                                else
+                                    infoNumComment = no_comments + " comment";
+                                tvCommentNum.setText(infoNumComment);
                             }
                             dialog.dismiss();
                         }

@@ -78,7 +78,7 @@ public class TopUsersAdapter extends ArrayAdapter {
                 String info = "ID:     " + user.getUserID() + "\n";
                 info += "Email: " + user.getEmail() + "\n";
                 info += "Name:  " + user.getName() + "\n";
-                info += "Likes: " + StatisticInChannelActivity.totalLikes;
+                info += "Likes: " + user.getTotalLike();
                 tvTopUserId.setText(info);
             }
         }catch (Exception ex){

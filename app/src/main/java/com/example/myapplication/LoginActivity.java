@@ -38,23 +38,25 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 cookies = CookieManager.getInstance().getCookie(url);//Lay cookie
-                Log.d("cookies", cookies);
-
-                if (!url.equals("https://video-vds.herokuapp.com/comment/auth/google/success"))
+                if (!url.equals("https://video-vds.herokuapp.com/newfeed"))
                     return;
 
-                //Move into new activity here >
-                webView.evaluateJavascript("(function(){return document.getElementsByTagName('pre')[0].innerHTML})();",
-                        new ValueCallback<String>() {
-                            @Override
-                            public void onReceiveValue(String html) {
-                                googleId = html;
-                                Log.d("GoogleID", googleId);
-                            }
-                        });
-                // Already subscribed
+                googleId=readCookie("googleId",cookies);
+                Log.d("cookies", cookies);
+                Log.d("googleId", googleId);
                 startActivity(new Intent(LoginActivity.this, linkToLogin_google.class));
             }
         });
+    }
+
+    public String readCookie(String name,String cookie) {
+        String nameEQ = name + "=";
+        String[] ca = cookie.split(";");
+        for(int i=0;i < ca.length;i++) {
+            String c = ca[i] ;
+            while (c.charAt(0)==' ') c = c.substring(1,c.length());
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length(),c.length());
+        }
+        return null;
     }
 }

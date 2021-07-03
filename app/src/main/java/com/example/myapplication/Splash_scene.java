@@ -21,7 +21,7 @@ public class Splash_scene extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_scene);
-        getSupportActionBar().setTitle("NHÓM 7 XIN CHÀO");
+        getSupportActionBar().setTitle("NHÓM 23 XIN CHÀO");
 
         ani_logo = (ImageView) findViewById(R.id.ani_logo);
         ani_title = (TextView) findViewById(R.id.tv_title);

@@ -34,7 +34,7 @@ import java.util.Map;
 public class ChannelActivity extends AppCompatActivity {
     ListView listViewChannels;
     ArrayList<Channel> listAllChannels = new ArrayList<>();
-    String info = "";
+    String info = "", url = "https://video-vds.herokuapp.com/channel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class ChannelActivity extends AppCompatActivity {
         }
 
         setControl();
-        String url = "https://video-vds.herokuapp.com/channel";
+//        String url = "https://video-vds.herokuapp.com/channel";
         getAllChannels(url);
     }
 
@@ -59,7 +59,7 @@ public class ChannelActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setControl();
-        String url = "https://video-vds.herokuapp.com/channel";
+//        String url = "https://video-vds.herokuapp.com/channel";
         getAllChannels(url);
     }
 
